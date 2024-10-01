@@ -1,0 +1,8 @@
+# FastAPI
+fastapi
+uvicorn
+# authenticator
+python-dateutil
+cryptography
+six
+iso8601

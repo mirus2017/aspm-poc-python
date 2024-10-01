@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Microservice integration with Hashicorp Vault (PoC)</title>
+    <style type="text/css">
+      table, tr, th, td, caption { font: 12px Arial; border: 1px solid black; border-collapse: collapse; }
+      th { font-weight: bold; color: white; background-color: black; }
+      td { color: black; background-color: white; }
+      div { margin-top: 10px; margin-bottom: 10px; font: 18px Arial; font-weight: bold; padding: 5px;  background-color: black; color: white; }
+    </style>
+  </head>
+  <body>
+    <h4>Microservice integration with Hashicorp Vault (PoC)</h4>
+    <form action="/" method="POST">
+      <p>
+        <label for="solution">Solution:</label>
+        <select id="solution" name="solution">
+          <option value="solution-abc"{% if param_solution=="solution-abc" %} selected{% endif %}>ABC</option>
+        </select>
+      </p>
+      <p>
+        <label for="microservice">Choose a microservice:</label>
+        <select id="microservice" name="microservice">
+          <option value="microservice-a"{% if param_microservice=="microservice-a" %} selected{% endif %}>A</option>
+          <option value="microservice-b"{% if param_microservice=="microservice-b" %} selected{% endif %}>B</option>
+          <option value="microservice-c"{% if param_microservice=="microservice-c" %} selected{% endif %}>C</option>
+        </select>
+      </p>
+      <p>
+        <label for="secret">Choose a secret:</label>
+        <select id="secret" name="secret">
+          <option value="ad/egad"{% if param_secret=="ad/egad" %} selected{% endif %}>EGAD Active Directory</option>
+          <option value="ad/xead"{% if param_secret=="ad/xead" %} selected{% endif %}>XEAD Active Directory</option>
+          <option value="sftp/customer-storage"{% if param_secret=="sftp/customer-storage" %} selected{% endif %}>SFTP server</option>
+          <option value="db/oracle"{% if param_secret=="db/oracle" %} selected{% endif %}>Oracle database</option>
+          <option value="db/postgresql"{% if param_secret=="db/postgresql" %} selected{% endif %}>PostgreSQL database</option>
+          <option value="msgbus/rabbitmq"{% if param_secret=="msgbus/rabbitmq" %} selected{% endif %}>RabbitMQ message bus</option>
+          <option value="api/idm"{% if param_secret=="api/idm" %} selected{% endif %}>IDM API</option>
+          <option value="api/is4"{% if param_secret=="api/is4" %} selected{% endif %}>Identity Server 4 API</option>
+          <option value="api/google-maps"{% if param_secret=="api/google-maps" %} selected{% endif %}>Google Maps API</option>
+          <option value="cert/symantec-vip"{% if param_secret=="cert/symantec-vip" %} selected{% endif %}>Symantec VIP certificate</option>
+        </select>
+      </p>
+      <p>
+       <input type="submit" value="Read secret"/>
+      </p>
+    </form>
+    <br/>
+    <textarea rows="4" cols="130">{{vault_result}}</textarea>
+    <br/>
+    <br/>
+    <table>
+      <caption>Solution ABC has below dependencies:</caption>
+      <thead>
+        <tr>
+          <th>Dependency/Microservice</th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>EGAD Active Directory</td>
+          <td>x</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>XEAD Active Directory</td>
+          <td></td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>SFTP server</td>
+          <td></td>
+          <td>x</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Oracle database</td>
+          <td>x</td>
+          <td></td>
+          <td>x</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL database</td>
+          <td></td>
+          <td>x</td>
+          <td>x</td>
+        </tr>
+        <tr>
+          <td>RabbitMQ message bus</td>
+          <td></td>
+          <td></td>
+          <td>x</td>
+        </tr>
+        <tr>
+          <td>IDM API</td>
+          <td>x</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Identity Server 4 API</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x</td>
+        </tr>
+        <tr>
+          <td>Google Maps API</td>
+          <td></td>
+          <td></td>
+          <td>x</td>
+        </tr>
+        <tr>
+          <td>Symantec VIP certificate</td>
+          <td></td>
+          <td></td>
+          <td>x</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

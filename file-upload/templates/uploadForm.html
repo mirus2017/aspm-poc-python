@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Security Masters - Demo of file upload attack</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="color-scheme" content="light dark">
+  </head>
+  <body>
+    <h1>File Upload</h1>
+    <form action="/uploadfile" method="POST" enctype="multipart/form-data" accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed">
+      <input name="file" type="file" />
+      <br />
+      <br />
+      <input type="submit" />
+    </form>
+    <p id="task"></p>
+    <p id="status"></p>
+  </body>
+  <script>
+    document.getElementsByTagName('form')[0].addEventListener('submit', async e => {
+      e.preventDefault()
+  
+      const uploadFormData = new FormData(e.target)
+      const filenames = uploadFormData.getAll('file').map(v => v.name).join(', ')
+      const uploadRequest = new XMLHttpRequest()
+      uploadRequest.open(e.target.method, e.target.action)
+      uploadRequest.timeout = 3600000
+  
+      uploadRequest.onreadystatechange = () => {
+        if (uploadRequest.readyState === XMLHttpRequest.DONE) {
+          let message = `${uploadRequest.status}: ${uploadRequest.statusText}`
+          if (uploadRequest.status === 0) message = 'Connection failed'
+          if (uploadRequest.status === 204) {
+            message = `Success: ${uploadRequest.statusText}`
+          }
+          document.getElementById('status').textContent = message
+        }
+      }
+  
+      uploadRequest.upload.onprogress = e => {
+        document.getElementById('status').textContent = (e.loaded === e.total ?
+          'Saving' :
+          `${Math.floor(100*e.loaded/e.total)}% ` +
+          `[${Math.floor(e.loaded/1024)} / ${Math.floor(e.total/1024)}KiB]`
+        )
+      }
+  
+      uploadRequest.send(uploadFormData)
+  
+      document.getElementById('task').textContent = `Uploading ${filenames}:`
+      document.getElementById('status').textContent = '0%'
+    })
+  </script>
+</html>
